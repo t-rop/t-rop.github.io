@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h1>Userinfo</h1>
+<div id="userinfo"></div>
+<script>
+let text = "<p>Browser CodeName: " + navigator.appCodeName + "</p>" +
+"<p>Browser Name: " + navigator.appName + "</p>" +
+"<p>Browser Version: " + navigator.appVersion + "</p>" +
+"<p>Cookies Enabled: " + navigator.cookieEnabled + "</p>" +
+"<p>Browser Language: " + navigator.language + "</p>" +
+"<p>Browser Online: " + navigator.onLine + "</p>" +
+"<p>Platform: " + navigator.platform + "</p>" +
+"<p>User-agent header: " + navigator.userAgent + "</p>" +
+"<p>screenX: " + screen.width +"</p>" + 
+"<p>screenY: " + screen.height +"</p>"; 
+document.getElementById("userinfo").innerHTML = text;
+</script>
+</body>
+</html>
