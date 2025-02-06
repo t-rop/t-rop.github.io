@@ -1,20 +1,90 @@
 <!DOCTYPE html>
 <html>
+<head>
+  <meta charset="UTF-8">
+  <title>User Information</title>
+</head>
 <body>
-<h1>Userinfo</h1>
-<div id="userinfo"></div>
-<script>
-let text = "<p>Browser CodeName: " + navigator.appCodeName + "</p>" +
-"<p>Browser Name: " + navigator.appName + "</p>" +
-"<p>Browser Version: " + navigator.appVersion + "</p>" +
-"<p>Cookies Enabled: " + navigator.cookieEnabled + "</p>" +
-"<p>Browser Language: " + navigator.language + "</p>" +
-"<p>Browser Online: " + navigator.onLine + "</p>" +
-"<p>Platform: " + navigator.platform + "</p>" +
-"<p>User-agent header: " + navigator.userAgent + "</p>" +
-"<p>screenX: " + screen.width +"</p>" + 
-"<p>screenY: " + screen.height +"</p>"; 
-document.getElementById("userinfo").innerHTML = text;
-</script>
+  <h1>User Info</h1>
+  <div id="userinfo"></div>
+
+  <script>
+    // Navigator object
+    const navigatorInfo = [
+      { label: 'Browser CodeName', value: navigator.appCodeName },
+      { label: 'Browser Name', value: navigator.appName },
+      { label: 'Browser Version', value: navigator.appVersion },
+      { label: 'Cookies Enabled', value: navigator.cookieEnabled },
+      { label: 'Browser Language', value: navigator.language },
+      { label: 'Browser Online', value: navigator.onLine },
+      { label: 'Platform', value: navigator.platform },
+      { label: 'User Agent', value: navigator.userAgent },
+      { label: 'Java Enabled', value: navigator.javaEnabled ? navigator.javaEnabled() : 'Not supported' },
+      { label: 'Logical CPU Cores', value: navigator.hardwareConcurrency },
+      { label: 'Estimated Device Memory (GB)', value: navigator.deviceMemory },
+      { label: 'Max Touch Points', value: navigator.maxTouchPoints },
+      { label: 'Languages', value: navigator.languages.join(', ') },
+      { label: 'Do Not Track', value: navigator.doNotTrack }
+    ];
+
+    // Connection
+    if (navigator.connection) {
+      const connection = navigator.connection;
+      navigatorInfo.push({ label: 'Connection Type', value: connection.type });
+      navigatorInfo.push({ label: 'Effective Connection Type', value: connection.effectiveType });
+      navigatorInfo.push({ label: 'Round Trip Time (ms)', value: connection.rtt });
+      navigatorInfo.push({ label: 'Downlink Speed (Mbit/s)', value: connection.downlink });
+      navigatorInfo.push({ label: 'Data Saver Mode', value: connection.saveData });
+    }
+
+    // Screen
+    const screenInfo = [
+      { label: 'Screen Width', value: screen.width },
+      { label: 'Screen Height', value: screen.height },
+      { label: 'Available Screen Width', value: screen.availWidth },
+      { label: 'Available Screen Height', value: screen.availHeight },
+      { label: 'Color Depth', value: screen.colorDepth },
+      { label: 'Pixel Depth', value: screen.pixelDepth }
+      { label: 'Screen Orientation Type', value: screen.orientation.type }
+      { label: 'Screen Orientation Angle', value: screen.orientation.angle }
+    ];
+
+    // Window 
+    const windowInfo = [
+      { label: 'Window Inner Width', value: window.innerWidth },
+      { label: 'Window Inner Height', value: window.innerHeight },
+      { label: 'Page X Offset', value: window.pageXOffset },
+      { label: 'Page Y Offset', value: window.pageYOffset },
+      { label: 'Device Pixel Ratio', value: window.devicePixelRatio }
+    ];
+
+    // Document
+    const documentInfo = [
+      { label: 'Document Title', value: document.title },
+      { label: 'Document URL', value: document.URL },
+      { label: 'Document Referrer', value: document.referrer },
+      { label: 'Last Modified', value: document.lastModified },
+      { label: 'Character Set', value: document.characterSet }
+    ];
+
+    // Combine
+    function generateHTML(infoArray, sectionTitle) {
+      let html = `<h2>${sectionTitle}</h2><ul>`;
+      infoArray.forEach(item => {
+        html += `<li><strong>${item.label}:</strong> ${item.value}</li>`;
+      });
+      html += '</ul>';
+      return html;
+    }
+
+    let text = '';
+    text += generateHTML(navigatorInfo, 'Navigator Information');
+    text += generateHTML(screenInfo, 'Screen Information');
+    text += generateHTML(windowInfo, 'Window/Viewport Information');
+    text += generateHTML(documentInfo, 'Document Information');
+
+    // Display
+    document.getElementById("userinfo").innerHTML = text;
+  </script>
 </body>
 </html>
