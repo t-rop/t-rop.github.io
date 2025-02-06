@@ -12,10 +12,19 @@
     </style>
 </head>
 <body>
-
-<canvas id="myCanvas" width="480" height="320"></canvas>
+    <header id="menu-bar"></header>
+    <canvas id="myCanvas" width="480" height="320"></canvas>
 
 <script>
+document.addEventListener('DOMContentLoaded', function() {
+    fetch('/menu.html')
+    .then(response => response.text())
+    .then(menuHtml => {
+    document.getElementById('menu-bar').innerHTML = menuHtml;
+    })
+    .catch(err => console.error('Error loading menu:', err));
+});
+
 // Canvas und Kontext initialisieren
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
@@ -205,6 +214,7 @@ function draw() {
 }
 
 draw();
+
 </script>
 
 </body>

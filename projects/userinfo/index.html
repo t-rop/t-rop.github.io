@@ -2,40 +2,23 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>User Information</title>
-    <style>
-      /* Menu Bar style */
-      nav {
-        background-color: #f4f4f4;
-        padding: 10px;
-        border-bottom: 2px solid #ccc;
-      }
-      nav ul {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        gap: 20px;
-      }
-      nav li {
-        display: block;
-      }
-      nav a {
-        text-decoration: none;
-        color: #333;
-        font-weight: 600;
-      }
-      nav a:hover {
-        color: #007acc;
-        text-decoration: underline;
-      }
-    </style>
+  <title>User Information</title>    
 </head>
 <body>
-  <h1>User Info</h1>
+    <header id="menu-bar"></header>
+    <h1>User Info</h1>
   <div id="userinfo"></div>
 
   <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      fetch('/menu.html')
+        .then(response => response.text())
+        .then(menuHtml => {
+          document.getElementById('menu-bar').innerHTML = menuHtml;
+        })
+        .catch(err => console.error('Error loading menu:', err));
+    });
+
     // Navigator object
     const navigatorInfo = [
       { label: 'Browser CodeName', value: navigator.appCodeName },
@@ -143,38 +126,7 @@
 
     // Display
     document.getElementById("userinfo").innerHTML = text;
-
-    // Wait for the DOM to be fully loaded
-    window.addEventListener('DOMContentLoaded', () => {
-      // Query all anchor tags that have an href
-      const anchors = document.querySelectorAll('a[href]');
-
-      // Create the nav element
-      const nav = document.createElement('nav');
-      const ul = document.createElement('ul');
-
-      // Loop through each anchor
-      anchors.forEach((anchor) => {
-        // You can optionally check if the anchor is visible or has a non-empty href
-        // For example, if (anchor.offsetParent === null) => it's hidden
-        // We'll skip that check for simplicity here
-
-        const li = document.createElement('li');
-        
-        // Clone the existing link so we don't remove it from the original location
-        const linkClone = anchor.cloneNode(true);
-
-        // Append the cloned link to our nav <ul>
-        li.appendChild(linkClone);
-        ul.appendChild(li);
-      });
-
-      // Put the <ul> inside our <nav>, and place the <nav> in the body
-      nav.appendChild(ul);
-
-      // Insert the nav bar at the very top of the body
-      document.body.insertBefore(nav, document.body.firstChild);
-    });
+   
   </script>
 </body>
 </html>
