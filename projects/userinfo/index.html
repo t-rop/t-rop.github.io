@@ -67,6 +67,36 @@
       { label: 'Character Set', value: document.characterSet }
     ];
 
+    function getWebGLInfo() {
+      const info = [];
+      try {
+        const canvas = document.createElement('canvas');
+        const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+        if (!gl) {
+          info.push({ label: 'WebGL Supported', value: 'No' });
+          return info;
+        }
+
+        info.push({ label: 'WebGL Supported', value: 'Yes' });
+
+        // Unmasked Vendor/Renderer can sometimes reveal GPU info
+        const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+        if (debugInfo) {
+          const vendor = gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL);
+          const renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+          info.push({ label: 'GPU Vendor', value: vendor });
+          info.push({ label: 'GPU Renderer', value: renderer });
+        } else {
+          info.push({ label: 'GPU Vendor', value: 'Not available' });
+          info.push({ label: 'GPU Renderer', value: 'Not available' });
+        }
+      } catch (e) {
+        info.push({ label: 'WebGL Info Error', value: e.message });
+      }
+      return info;
+    }
+
+
     // Combine
     function generateHTML(infoArray, sectionTitle) {
       let html = `<h2>${sectionTitle}</h2><ul>`;
@@ -82,6 +112,7 @@
     text += generateHTML(screenInfo, 'Screen Information');
     text += generateHTML(windowInfo, 'Window/Viewport Information');
     text += generateHTML(documentInfo, 'Document Information');
+    text += generateHTML(getWebGLInfo(), 'WebGL Information');
 
     // Display
     document.getElementById("userinfo").innerHTML = text;
